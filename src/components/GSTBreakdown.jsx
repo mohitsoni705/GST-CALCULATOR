@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { formatIndianCurrency } from "../utils/gstCalculations";
 
-/**
- * GSTBreakdown — shows CGST, SGST, IGST split
- */
 const GSTBreakdown = ({ result }) => {
   const [taxType, setTaxType] = useState("intra"); // 'intra' | 'inter'
 
@@ -16,7 +13,6 @@ const GSTBreakdown = ({ result }) => {
     <div className="card breakdown-card">
       <h3 className="card-title">GST Breakdown</h3>
 
-      {/* Intra-state vs Inter-state toggle */}
       <div className="breakdown-toggle" role="group" aria-label="Tax type">
         <button
           className={`breakdown-btn ${taxType === "intra" ? "breakdown-btn--active" : ""}`}

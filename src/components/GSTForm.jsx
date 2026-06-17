@@ -1,9 +1,6 @@
 import React from "react";
 import RateSelector from "./RateSelector";
 
-/**
- * GSTForm — collects user inputs for GST calculation
- */
 const GSTForm = ({
   mode,
   amount,
@@ -19,7 +16,6 @@ const GSTForm = ({
   onToggleComparison,
   showComparison,
 }) => {
-  // Allow Enter key to trigger calculation
   const handleKeyDown = (e) => {
     if (e.key === "Enter") onCalculate();
   };
@@ -28,7 +24,6 @@ const GSTForm = ({
     <div className="card form-card">
       <h2 className="card-title">Calculate GST</h2>
 
-      {/* Mode toggle */}
       <div className="mode-toggle-group" role="group" aria-label="Calculation mode">
         <button
           className={`mode-btn ${mode === "add" ? "mode-btn--active" : ""}`}
@@ -46,7 +41,6 @@ const GSTForm = ({
         </button>
       </div>
 
-      {/* Amount input */}
       <div className="form-group">
         <label className="form-label" htmlFor="amount">
           {mode === "add" ? "Base Amount (excl. GST)" : "Total Amount (incl. GST)"}
@@ -74,7 +68,6 @@ const GSTForm = ({
         )}
       </div>
 
-      {/* Rate selector */}
       <RateSelector
         selectedRate={selectedRate}
         customRate={customRate}
@@ -83,7 +76,6 @@ const GSTForm = ({
         error={errors.rate}
       />
 
-      {/* Action buttons */}
       <div className="form-actions">
         <button className="btn btn-primary" onClick={onCalculate}>
           Calculate
@@ -93,7 +85,6 @@ const GSTForm = ({
         </button>
       </div>
 
-      {/* Comparison toggle */}
       <button
         className="comparison-toggle-btn"
         onClick={onToggleComparison}
@@ -105,3 +96,4 @@ const GSTForm = ({
 };
 
 export default GSTForm;
+

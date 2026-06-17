@@ -1,8 +1,5 @@
 import React from "react";
 
-/**
- * ThemeToggle — switches between light and dark mode
- */
 const ThemeToggle = ({ theme, onToggle }) => {
   return (
     <button

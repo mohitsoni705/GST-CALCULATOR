@@ -1,9 +1,6 @@
 import React from "react";
 import ThemeToggle from "./ThemeToggle";
 
-/**
- * Header — gradient banner with app title and tagline
- */
 const Header = ({ theme, onThemeToggle }) => {
   return (
     <header className="app-header">

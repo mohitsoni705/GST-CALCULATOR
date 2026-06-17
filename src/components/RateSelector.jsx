@@ -1,9 +1,6 @@
 import React from "react";
 import { GST_RATES } from "../utils/gstCalculations";
 
-/**
- * RateSelector — GST rate dropdown + custom rate input
- */
 const RateSelector = ({
   selectedRate,
   customRate,
@@ -29,7 +26,6 @@ const RateSelector = ({
         ))}
       </select>
 
-      {/* Custom rate input appears only when 'custom' is chosen */}
       {selectedRate === "custom" && (
         <div className="custom-rate-wrap">
           <input

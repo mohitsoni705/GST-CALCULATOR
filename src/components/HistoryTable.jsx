@@ -1,9 +1,6 @@
 import React from "react";
 import { formatIndianCurrency } from "../utils/gstCalculations";
 
-/**
- * HistoryTable — displays past GST calculations stored in localStorage
- */
 const HistoryTable = ({ history, onRestore, onClear }) => {
   if (!history || history.length === 0) {
     return (

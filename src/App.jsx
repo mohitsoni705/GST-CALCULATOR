@@ -5,10 +5,6 @@ import Home from "./pages/Home";
 import { useGSTCalculator } from "./hooks/useGSTCalculator";
 import "./styles/global.css";
 
-/**
- * App — root component
- * Manages theme and passes all calculator state to Home via hook
- */
 function App() {
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem("gst_theme") || "light";
@@ -30,9 +26,6 @@ function App() {
     handleClearHistory, handleRestoreHistory,
   } = useGSTCalculator();
 
-  /**
-   * PDF download using browser's print dialog with a styled print layout
-   */
   const handleDownloadPDF = useCallback(() => {
     if (!result) return;
     window.print();

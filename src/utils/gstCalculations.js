@@ -1,13 +1,3 @@
-/**
- * GST Calculation Utility Functions
- * All business logic for GST calculations is centralized here.
- */
-
-/**
- * Formats a number in Indian currency format (e.g., 1,00,000)
- * @param {number} amount
- * @returns {string}
- */
 export const formatIndianCurrency = (amount) => {
   if (isNaN(amount) || amount === null || amount === undefined) return "0.00";
   const fixed = parseFloat(amount).toFixed(2);
@@ -21,12 +11,6 @@ export const formatIndianCurrency = (amount) => {
   return `₹${formatted}.${decimal}`;
 };
 
-/**
- * Adds GST to an amount (exclusive GST)
- * @param {number} amount - Base amount before GST
- * @param {number} rate - GST rate as a percentage
- * @returns {object}
- */
 export const addGST = (amount, rate) => {
   const originalAmount = parseFloat(amount);
   const gstRate = parseFloat(rate);
@@ -36,10 +20,8 @@ export const addGST = (amount, rate) => {
   const gstAmount = (originalAmount * gstRate) / 100;
   const finalAmount = originalAmount + gstAmount;
 
-  // CGST and SGST are each half of the GST rate (intra-state)
   const cgst = gstAmount / 2;
   const sgst = gstAmount / 2;
-  // IGST is the full GST amount (inter-state)
   const igst = gstAmount;
 
   return {
@@ -53,19 +35,12 @@ export const addGST = (amount, rate) => {
   };
 };
 
-/**
- * Removes GST from an amount (inclusive GST)
- * @param {number} totalAmount - Amount already including GST
- * @param {number} rate - GST rate as a percentage
- * @returns {object}
- */
 export const removeGST = (totalAmount, rate) => {
   const total = parseFloat(totalAmount);
   const gstRate = parseFloat(rate);
 
   if (isNaN(total) || isNaN(gstRate)) return null;
 
-  // Base amount = total / (1 + rate/100)
   const baseAmount = total / (1 + gstRate / 100);
   const gstPortion = total - baseAmount;
 
@@ -84,12 +59,6 @@ export const removeGST = (totalAmount, rate) => {
   };
 };
 
-/**
- * Validates user inputs
- * @param {string|number} amount
- * @param {string|number} rate
- * @returns {object} { isValid, errors }
- */
 export const validateInputs = (amount, rate) => {
   const errors = {};
 
@@ -115,12 +84,6 @@ export const validateInputs = (amount, rate) => {
   };
 };
 
-/**
- * Formats a result object into a human-readable string for copying
- * @param {object} result
- * @param {string} mode - 'add' or 'remove'
- * @returns {string}
- */
 export const formatResultForCopy = (result, mode) => {
   if (!result) return "";
 
@@ -145,7 +108,6 @@ IGST (${result.rate}%): ${formatIndianCurrency(result.igst)}`;
   }
 };
 
-/** Standard GST rates in India */
 export const GST_RATES = [
   { label: "3% — Essential goods", value: "3" },
   { label: "5% — Basic necessities", value: "5" },
@@ -155,12 +117,6 @@ export const GST_RATES = [
   { label: "Custom Rate", value: "custom" },
 ];
 
-/**
- * Generates a comparison table for all standard GST rates
- * @param {number} amount
- * @param {string} mode - 'add' or 'remove'
- * @returns {Array}
- */
 export const generateRateComparison = (amount, mode) => {
   const standardRates = [3, 5, 12, 18, 28];
   return standardRates.map((rate) => {

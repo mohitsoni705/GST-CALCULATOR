@@ -10,11 +10,8 @@ import {
 const HISTORY_KEY = "gst_calculator_history";
 const MAX_HISTORY = 20;
 
-/**
- * Central custom hook for GST Calculator state management
- */
 export const useGSTCalculator = () => {
-  const [mode, setMode] = useState("add"); // 'add' | 'remove'
+  const [mode, setMode] = useState("add");
   const [amount, setAmount] = useState("");
   const [selectedRate, setSelectedRate] = useState("18");
   const [customRate, setCustomRate] = useState("");
@@ -25,32 +22,21 @@ export const useGSTCalculator = () => {
   const [showComparison, setShowComparison] = useState(false);
   const [comparisonData, setComparisonData] = useState([]);
 
-  // Load history from localStorage on mount
   useEffect(() => {
     try {
       const saved = localStorage.getItem(HISTORY_KEY);
       if (saved) setHistory(JSON.parse(saved));
-    } catch {
-      // Ignore parse errors
-    }
+    } catch {}
   }, []);
 
-  // Persist history to localStorage whenever it changes
   useEffect(() => {
     try {
       localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
-    } catch {
-      // Ignore storage errors
-    }
+    } catch {}
   }, [history]);
 
-  // Active GST rate (either selected or custom)
-  const activeRate =
-    selectedRate === "custom" ? customRate : selectedRate;
+  const activeRate = selectedRate === "custom" ? customRate : selectedRate;
 
-  /**
-   * Run calculation in real-time whenever inputs change
-   */
   useEffect(() => {
     if (!amount || !activeRate) {
       setResult(null);
@@ -64,10 +50,7 @@ export const useGSTCalculator = () => {
       return;
     }
 
-    const calc =
-      mode === "add"
-        ? addGST(amount, activeRate)
-        : removeGST(amount, activeRate);
+    const calc = mode === "add" ? addGST(amount, activeRate) : removeGST(amount, activeRate);
 
     setResult(calc);
 
@@ -76,26 +59,16 @@ export const useGSTCalculator = () => {
     }
   }, [amount, activeRate, mode, showComparison]);
 
-  /**
-   * Handle form submission with validation
-   */
   const handleCalculate = useCallback(() => {
-    const { isValid, errors: validationErrors } = validateInputs(
-      amount,
-      activeRate
-    );
+    const { isValid, errors: validationErrors } = validateInputs(amount, activeRate);
     setErrors(validationErrors);
 
     if (!isValid) return;
 
-    const calc =
-      mode === "add"
-        ? addGST(amount, activeRate)
-        : removeGST(amount, activeRate);
+    const calc = mode === "add" ? addGST(amount, activeRate) : removeGST(amount, activeRate);
 
     setResult(calc);
 
-    // Save to history
     const entry = {
       id: Date.now(),
       mode,
@@ -108,9 +81,6 @@ export const useGSTCalculator = () => {
     setHistory((prev) => [entry, ...prev].slice(0, MAX_HISTORY));
   }, [amount, activeRate, mode]);
 
-  /**
-   * Reset all fields
-   */
   const handleReset = useCallback(() => {
     setAmount("");
     setSelectedRate("18");
@@ -122,9 +92,6 @@ export const useGSTCalculator = () => {
     setComparisonData([]);
   }, []);
 
-  /**
-   * Copy results to clipboard
-   */
   const handleCopy = useCallback(async () => {
     if (!result) return;
     const text = formatResultForCopy(result, mode);
@@ -133,7 +100,6 @@ export const useGSTCalculator = () => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2500);
     } catch {
-      // Fallback for older browsers
       const el = document.createElement("textarea");
       el.value = text;
       document.body.appendChild(el);
@@ -145,9 +111,6 @@ export const useGSTCalculator = () => {
     }
   }, [result, mode]);
 
-  /**
-   * Toggle rate comparison table
-   */
   const handleToggleComparison = useCallback(() => {
     setShowComparison((prev) => {
       if (!prev && amount && activeRate) {
@@ -157,17 +120,11 @@ export const useGSTCalculator = () => {
     });
   }, [amount, activeRate, mode]);
 
-  /**
-   * Clear history
-   */
   const handleClearHistory = useCallback(() => {
     setHistory([]);
     localStorage.removeItem(HISTORY_KEY);
   }, []);
 
-  /**
-   * Restore a history entry
-   */
   const handleRestoreHistory = useCallback((entry) => {
     setMode(entry.mode);
     setAmount(String(entry.amount));
@@ -185,7 +142,6 @@ export const useGSTCalculator = () => {
   }, []);
 
   return {
-    // State
     mode,
     amount,
     selectedRate,
@@ -197,13 +153,11 @@ export const useGSTCalculator = () => {
     showComparison,
     comparisonData,
     activeRate,
-    // Setters
     setMode,
     setAmount,
     setSelectedRate,
     setCustomRate,
     setErrors,
-    // Handlers
     handleCalculate,
     handleReset,
     handleCopy,

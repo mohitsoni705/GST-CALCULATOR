@@ -5,10 +5,6 @@ import GSTBreakdown from "../components/GSTBreakdown";
 import HistoryTable from "../components/HistoryTable";
 import { formatIndianCurrency } from "../utils/gstCalculations";
 
-/**
- * Home — the main page that composes all calculator components
- * Receives all state and handlers from the custom hook via props
- */
 const Home = ({
   mode,
   amount,
@@ -35,7 +31,6 @@ const Home = ({
   return (
     <main className="main-content">
       <div className="calculator-grid">
-        {/* Left: Input form */}
         <section className="grid-left">
           <GSTForm
             mode={mode}
@@ -53,7 +48,6 @@ const Home = ({
             showComparison={showComparison}
           />
 
-          {/* GST Rate Comparison Table (conditional) */}
           {showComparison && comparisonData.length > 0 && (
             <div className="card comparison-card">
               <h3 className="card-title">Rate Comparison</h3>
@@ -97,7 +91,6 @@ const Home = ({
           )}
         </section>
 
-        {/* Right: Results */}
         <section className="grid-right">
           <ResultCard
             result={result}
@@ -110,7 +103,6 @@ const Home = ({
         </section>
       </div>
 
-      {/* History table (full width) */}
       <section className="history-section">
         <HistoryTable
           history={history}

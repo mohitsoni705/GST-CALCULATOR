@@ -1,9 +1,6 @@
 import React from "react";
 import { formatIndianCurrency } from "../utils/gstCalculations";
 
-/**
- * ResultCard — displays the main GST calculation output
- */
 const ResultCard = ({ result, mode, onCopy, copied, onDownloadPDF }) => {
   if (!result) {
     return (
